@@ -38,7 +38,12 @@
             DiffusionOperator(input,target); //Aply the diffusion operator
         }
 
+
+
     }
 
-
+    operation GroverIteration (input: Qubit[], target: Qubit, oracle: ((Qubit[],Qubit)=>Unit is Ctl + Adj)) : Unit is Ctl + Adj{
+        oracle(input,target); //Apply the oracle
+        DiffusionOperator(input,target); //Aply the diffusion operator
+    }
 }
