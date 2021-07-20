@@ -24,7 +24,7 @@ namespace final_project_algorithm.counting {
 		Adjoint QFT(LittleEndianAsBigEndian(LittleEndian(counting)));
 		
 		let num = MeasureInteger(LittleEndian(counting));
-		ResetAll(counting + [target]);
+		ResetAll(counting + [target] + input);
 		
 		return IntAsDouble(num)/PowD(2.0,IntAsDouble(numberOfQubits));
 	}
