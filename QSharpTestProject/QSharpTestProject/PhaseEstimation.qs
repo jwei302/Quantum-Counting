@@ -6,27 +6,25 @@ namespace final_project_algorithm.counting {
 	open Microsoft.Quantum.Arithmetic;
 	open final_project_algorithm;
 
+
 	operation GetPhase(oracle : (Qubit[], Qubit) => Unit is Ctl + Adj, numberOfQubits : Int): Double {
-		let n = numberOfQubits;
-		let t = n;
-		use ancilla = Qubit();
+		use counting = Qubit[numberOfQubits];
+		use input = Qubit[numberOfQubits];
+		use target = Qubit();
 
-		use countingQubits = Qubit[t];
-		use searchingQubits = Qubit[n];
+		ApplyToEach(H,counting);
+		ApplyToEach(H,input);
+		X(target);
 
-		ApplyToEach(H, countingQubits);
-		ApplyToEach(H, searchingQubits);
-
-		for i in 0..t-1 {
-			for j in 1..2^i {
-				Controlled GroversAlgorithm([countingQubits[i]], (searchingQubits, ancilla, oracle));
+		for i in 0..(numberOfQubits-1) {
+			for j in 0..(PowI(2,i)-1) {
+				Controlled GroversAlgorithm([counting[i]], (input, target, oracle));
 			}
 		}
+		Adjoint QFT(BigEndian(counting));
 
-		Adjoint QFT(BigEndian(countingQubits));
-
-		ResetAll(countingQubits + searchingQubits + [ancilla]);
-		let num = MeasureInteger(BigEndianAsLittleEndian(BigEndian(countingQubits)));
+		ResetAll(counting + input + [target]);
+		let num = MeasureInteger(BigEndianAsLittleEndian(BigEndian(counting)));
 		return IntAsDouble(num)/PowD(2.0,IntAsDouble(numberOfQubits));
 	}
 
