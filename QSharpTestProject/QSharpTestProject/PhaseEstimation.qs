@@ -27,7 +27,7 @@ namespace final_project_algorithm.counting {
 		let num = MeasureInteger(LittleEndian(counting));
 		ResetAll(counting + [target] + input);
 		
-		return IntAsDouble(num)/PowD(2.0,IntAsDouble(numberOfQubits));
+		return IntAsDouble(num)/PowD(2.0,IntAsDouble(numberOfQubits)) * PI() * 2.0;
 	}
 
 	operation GetAmplitude(phase: Double): Double{
