@@ -6,27 +6,44 @@
     open Microsoft.Quantum.Math;
     open Microsoft.Quantum.Convert;
     
-    //This operation flips the phase of the target qubit if the register is in the 0 state
-    operation FlipPhaseIfAllZeros (register : Qubit[], target : Qubit) : Unit {
-        ApplyToEach(X, register); //If all 0s then make all 1s
-        Controlled Z(register, target); //If all 1s flip phase of target
-        ApplyToEach(X, register); //Reset qubits to inital state
+
+    //Applies X Gate to all qubits in input
+    operation Xall(input: Qubit[]): Unit is Ctl + Adj{
+        for i in 0..Length(input)-1{
+            X(input[i]);
+        }
     }
+
+    //Applies Hadamard Gate to all qubits in input
+    operation Hall(input: Qubit[]): Unit is Ctl + Adj{
+        for i in 0..Length(input)-1{
+            H(input[i]);
+        }
+    }
+  
+    //This operation flips the phase of the target qubit if the register is in the 0 state
+    operation FlipPhaseIfAllZeros (register : Qubit[], target : Qubit) : Unit is Ctl + Adj{
+        Xall(register); //If all 0s then make all 1s
+        Controlled Z(register, target); //If all 1s flip phase of target
+        Xall(register); //Reset qubits to inital state
+    }
+
     //This is the diffusion operation in Grovers algorithm
     operation DiffusionOperator (
         register : Qubit[],
         target : Qubit
-    ) : Unit {
-        ApplyToEach(H,register); //Apply H all
+    ) : Unit is Ctl + Adj{
+        Hall(register); //Apply H all
         FlipPhaseIfAllZeros(register,target); //Apply flip phase of 0 state
-        ApplyToEach(H,register); //Apply H all
+        Hall(register); //Apply H all
     }
+    
     //Grovers algorithm (input and target must be in 0 state)
-    operation GroversAlgorithm (input: Qubit[], target: Qubit, oracle: ((Qubit[],Qubit)=>Unit)) : Unit {
+    operation GroversAlgorithm (input: Qubit[], target: Qubit, oracle: ((Qubit[],Qubit)=>Unit is Ctl + Adj)) : Unit is Ctl + Adj{
 
         let iterations = Round(PowD(2.0, IntAsDouble(Length(input)) / 2.0)); //Num of iterations (only valid for 1 solution)
 
-        ApplyToEach(H,input); //Apply H all
+        Hall(input); //Apply H all
         X(target); //Flip target to 1 state
 
         //Run grover iteration 
@@ -36,4 +53,6 @@
         }
 
     }
+
+
 }
