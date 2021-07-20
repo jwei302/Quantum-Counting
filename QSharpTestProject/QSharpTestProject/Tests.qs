@@ -6,12 +6,35 @@
     open final_project_algorithm.counting;
     open Microsoft.Quantum.Convert;
     open Microsoft.Quantum.Math;
+    open Microsoft.Quantum.Measurement;
 
 
     operation oracle1(register : Qubit[], output : Qubit) : Unit is Ctl + Adj {
         ApplyToEachCA(X, register);
         Controlled Z(register, output);
         ApplyToEachCA(X, register);
+    }
+
+    @Test("QuantumSimulator")
+    operation GroverUnitTest () : Unit {
+        let inputLength = 3;
+        use input = Qubit[inputLength];
+        use target = Qubit();
+        ApplyToEach(H,input);
+        X(target);
+        GroversAlgorithm(input,target,oracle1);
+        let output = ResultArrayAsBoolArray(MultiM(input));
+
+        Message("Correct state is 000");
+        mutable msg = "";
+        for o in output{
+		    set msg += o?"1"|"0";
+	    }
+        Message($"Guessed state is {msg}");
+        if(msg != "000"){
+            fail "wrong state guessed";
+        }
+        ResetAll(input + [target]);
     }
 
     @Test("QuantumSimulator")
