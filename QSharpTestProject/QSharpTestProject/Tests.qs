@@ -15,6 +15,11 @@
         ApplyToEachCA(X, register);
     }
 
+    operation oracle2(register: Qubit[], output : Qubit) : Unit is Ctl + Adj {
+        ApplyToEachCA(X, register[0..2..2]);
+        Controlled Z(register[0..2..2], output);
+        ApplyToEachCA(X, register[0..2..2]);
+    }
     @Test("QuantumSimulator")
     operation GroverUnitTest () : Unit {
         let inputLength = 3;
@@ -39,8 +44,8 @@
 
     @Test("QuantumSimulator")
     operation CountingUnitTest () : Unit {
-        mutable inputLength = 3;
-        let phase = GetPhase(oracle1, inputLength);
+        mutable inputLength = 6;
+        let phase = GetPhase(oracle2, inputLength);
         Message($"The estimate for phase is: {phase}");
         let amp = GetAmplitude(phase);
         Message($"The estimate for amplitude is: {amp}");
@@ -50,7 +55,7 @@
             Message("Test passed.");
         }
         else{
-            fail $"Test failed. Found number of solutions to be {count} when it should be 1";
+            fail $"Test failed. Found number of solutions to be {count} when it should be 2";
         }
     }
 }
