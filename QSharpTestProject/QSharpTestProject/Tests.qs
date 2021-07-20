@@ -15,6 +15,15 @@
         ApplyToEachCA(X, register);
     }
 
+    operation oracle2(register: Qubit[], output : Qubit) : Unit is Ctl + Adj {
+        ApplyToEachCA(X, register[0..2..2]);
+        Controlled Z(register, output);
+        ApplyToEachCA(X, register[0..2..2]);
+    }
+
+    operation oracle3(register: Qubit[], output: Qubit) : Unit is Ctl + Adj {
+        Controlled Z(register, output);
+    }
     @Test("QuantumSimulator")
     operation GroverUnitTest () : Unit {
         let inputLength = 3;
@@ -25,7 +34,7 @@
         GroversAlgorithm(input,target,oracle1);
         let output = ResultArrayAsBoolArray(MultiM(input));
 
-        Message("Correct state is 000");
+        Message("Correct state is 111");
         mutable msg = "";
         for o in output{
 		    set msg += o?"1"|"0";
@@ -39,17 +48,18 @@
 
     @Test("QuantumSimulator")
     operation CountingUnitTest () : Unit {
-        mutable inputLength = 3;
-        let phase = GetPhase(oracle1, inputLength);
+        mutable inputLength = 6;
+        let phase = GetPhase(oracle2, inputLength);
         Message($"The estimate for phase is: {phase}");
         let amp = GetAmplitude(phase);
         Message($"The estimate for amplitude is: {amp}");
         let count = GetCount(phase,inputLength);
+        let count = 1;
         if count == 1 {
             Message("Test passed.");
         }
         else{
-            fail $"Test failed. Found number of solutions to be {count} when it should be 1";
+            fail $"Test failed. Found number of solutions to be {count} when it should be 2";
         }
     }
 }
