@@ -34,6 +34,6 @@ namespace final_project_algorithm.counting {
 	}
 
 	operation GetCount(phase: Double, numberOfQubits: Int): Int {
-		return Round(PowD(Sin(phase/2.0),2.0)*IntAsDouble(numberOfQubits));
+		return Round(PowD(Sin(phase/2.0),2.0)*PowD(2.0, IntAsDouble(numberOfQubits)));
 	}
 }
