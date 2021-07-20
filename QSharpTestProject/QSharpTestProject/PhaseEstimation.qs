@@ -22,12 +22,12 @@ namespace final_project_algorithm.counting {
 			}
 		}
 
-		Adjoint QFT(LittleEndianAsBigEndian(LittleEndian(counting)));
+		Adjoint QFTLE(LittleEndian(counting));
 		
 		let num = MeasureInteger(LittleEndian(counting));
 		ResetAll(counting + [target] + input);
 		
-		return IntAsDouble(num)/PowD(2.0,IntAsDouble(numberOfQubits)) * PI() * 2.0;
+		return (IntAsDouble(num)/PowD(2.0,IntAsDouble(numberOfQubits))) * PI() * 2.0;
 	}
 
 	operation GetAmplitude(phase: Double): Double{
@@ -35,6 +35,7 @@ namespace final_project_algorithm.counting {
 	}
 
 	operation GetCount(phase: Double, numberOfQubits: Int): Int {
-		return Round(PowD(2.0, IntAsDouble(numberOfQubits)) - PowD(Sin(phase/2.0),2.0)*PowD(2.0, IntAsDouble(numberOfQubits)));
+		let N = PowD(2.0, IntAsDouble(numberOfQubits));
+		return Round((1.0-PowD(Sin(phase/2.0),2.0))*N);
 	}
 }

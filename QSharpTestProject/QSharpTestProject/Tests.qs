@@ -25,6 +25,9 @@
         Controlled Z(register, output);
     } // 1 solution
 
+    operation oracle4(register: Qubit[], output: Qubit) : Unit is Ctl + Adj{
+        Controlled Z(register[0..1], output);
+    }
     @Test("QuantumSimulator")
     operation GroverUnitTest () : Unit {
         let inputLength = 3;
@@ -35,13 +38,13 @@
         GroversAlgorithm(input,target,oracle3);
         let output = ResultArrayAsBoolArray(MultiM(input));
 
-        Message("Correct state is 111");
+        Message("Correct state is 000");
         mutable msg = "";
         for o in output{
 		    set msg += o?"1"|"0";
 	    }
         Message($"Guessed state is {msg}");
-        if(msg != "111"){
+        if(msg != "000"){
             fail "wrong state guessed";
         }
         ResetAll(input + [target]);
@@ -49,12 +52,13 @@
 
     @Test("QuantumSimulator")
     operation CountingUnitTest () : Unit {
-        mutable inputLength = 6;
-        let phase = GetPhase(oracle1, inputLength);
+        mutable inputLength = 3;
+        let phase = GetPhase(oracle4, inputLength);
         Message($"The estimate for phase is: {phase}");
         let amp = GetAmplitude(phase);
         Message($"The estimate for amplitude is: {amp}");
         let count = GetCount(phase,inputLength);
+        Message($"The estimate for count is: {count}");
         if count == 1 {
             Message("Test passed.");
         }
