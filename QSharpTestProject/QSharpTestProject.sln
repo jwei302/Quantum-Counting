@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QSharpTestProject", "QSharpTestProject\QSharpTestProject.csproj", "{FA5425C7-947E-4751-AA2D-21EF586F2F6E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "final_project_algorithm", "QSharpTestProject\final_project_algorithm.csproj", "{FA5425C7-947E-4751-AA2D-21EF586F2F6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
