@@ -11,13 +11,13 @@ namespace final_project_algorithm.counting {
 		use counting = Qubit[numberOfQubits];
 		use input = Qubit[numberOfQubits];
 		use target = Qubit();
-
+		X(target);
 		ApplyToEach(H,counting);
 		ApplyToEach(H,input);
 
 		for i in 0..(numberOfQubits-1) {
 			for j in 0..(PowI(2,i)-1) {
-				Controlled GroversAlgorithm([counting[i]], (input, target, oracle));
+				Controlled GroverIteration([counting[i]], (input, target, oracle));
 			}
 		}
 		Adjoint QFT(BigEndian(counting));
@@ -33,6 +33,6 @@ namespace final_project_algorithm.counting {
 	}
 
 	operation GetCount(phase: Double, numberOfQubits: Int): Int {
-		return Round(PowD(Sin(phase)/2.0,2.0)*IntAsDouble(numberOfQubits));
+		return Round(PowD(Sin(phase/2.0),2.0)*IntAsDouble(numberOfQubits));
 	}
 }
