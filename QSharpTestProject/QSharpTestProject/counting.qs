@@ -24,6 +24,8 @@ namespace final_project_algorithm.counting {
 		}
 
 		Adjoint QFT(BigEndian(countingQubits));
+
+		ResetAll(countingQubits + searchingQubits + [ancilla]);
 		return MeasureInteger(BigEndianAsLittleEndian(BigEndian(countingQubits)));
 	}
 }
