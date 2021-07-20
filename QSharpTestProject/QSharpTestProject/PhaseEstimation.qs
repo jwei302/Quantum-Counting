@@ -13,6 +13,7 @@ namespace final_project_algorithm.counting {
 		use target = Qubit();
 		X(target);
 		ApplyToEach(H,counting);
+		ApplyToEach(H,input);
 		
 
 		for i in 0..(numberOfQubits-1) {
