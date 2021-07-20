@@ -17,8 +17,12 @@
 
     operation oracle2(register: Qubit[], output : Qubit) : Unit is Ctl + Adj {
         ApplyToEachCA(X, register[0..2..2]);
-        Controlled Z(register[0..2..2], output);
+        Controlled Z(register, output);
         ApplyToEachCA(X, register[0..2..2]);
+    }
+
+    operation oracle3(register: Qubit[], output: Qubit) : Unit is Ctl + Adj {
+        Controlled Z(register, output);
     }
     @Test("QuantumSimulator")
     operation GroverUnitTest () : Unit {
@@ -30,7 +34,7 @@
         GroversAlgorithm(input,target,oracle1);
         let output = ResultArrayAsBoolArray(MultiM(input));
 
-        Message("Correct state is 000");
+        Message("Correct state is 111");
         mutable msg = "";
         for o in output{
 		    set msg += o?"1"|"0";
