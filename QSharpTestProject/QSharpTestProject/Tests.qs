@@ -4,6 +4,8 @@
     open Microsoft.Quantum.Intrinsic;
     open final_project_algorithm;
     open final_project_algorithm.counting;
+    open Microsoft.Quantum.Convert;
+    open Microsoft.Quantum.Math;
 
 
     operation oracle1(register : Qubit[], output : Qubit) : Unit is Ctl + Adj {
@@ -15,12 +17,16 @@
     @Test("QuantumSimulator")
     operation CountingUnitTest () : Unit {
         mutable inputLength = 3;
-        let val1 = QuantumCounting(oracle1, inputLength);
-        if val1 == 1 {
+        let phase = GetPhase(oracle1, inputLength);
+        Message($"The estimate for phase is: {phase}");
+        let amp = GetAmplitude(phase);
+        Message($"The estimate for amplitude is: {amp}");
+        let count = GetCount(phase,inputLength);
+        if count == 1 {
             Message("Test passed.");
         }
         else{
-            Message($"Test failed. Found number of solutions to be {val1} when it should be 1");
+            fail $"Test failed. Found number of solutions to be {count} when it should be 1";
         }
     }
 }

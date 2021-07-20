@@ -6,7 +6,7 @@ namespace final_project_algorithm.counting {
 	open Microsoft.Quantum.Arithmetic;
 	open final_project_algorithm;
 
-	operation QuantumCounting (oracle : (Qubit[], Qubit) => Unit is Ctl + Adj, numberOfQubits : Int): Int {
+	operation GetPhase(oracle : (Qubit[], Qubit) => Unit is Ctl + Adj, numberOfQubits : Int): Double {
 		let n = numberOfQubits;
 		let t = n;
 		use ancilla = Qubit();
@@ -26,6 +26,15 @@ namespace final_project_algorithm.counting {
 		Adjoint QFT(BigEndian(countingQubits));
 
 		ResetAll(countingQubits + searchingQubits + [ancilla]);
-		return MeasureInteger(BigEndianAsLittleEndian(BigEndian(countingQubits)));
+		let num = MeasureInteger(BigEndianAsLittleEndian(BigEndian(countingQubits)));
+		return IntAsDouble(num)/PowD(2.0,IntAsDouble(numberOfQubits));
+	}
+
+	operation GetAmplitude(phase: Double): Double{
+		return PowD(Sin(phase),2.0);
+	}
+
+	operation GetCount(phase: Double, numberOfQubits: Int): Int {
+		return Round(PowD(Sin(phase)/2.0,2.0)*IntAsDouble(numberOfQubits));
 	}
 }
