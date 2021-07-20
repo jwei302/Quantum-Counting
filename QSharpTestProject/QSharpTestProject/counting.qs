@@ -6,7 +6,7 @@ namespace final_project_algorithm.counting {
 	open Microsoft.Quantum.Arithmetic;
 	open final_project_algorithm;
 
-	operation Counting (oracle : (Qubit[], Qubit) => Unit, numberOfQubits : Int): Int {
+	operation QuantumCounting (oracle : (Qubit[], Qubit) => Unit, numberOfQubits : Int): Int {
 		let n = numberOfQubits;
 		let t = n;
 		use ancilla = Qubit();

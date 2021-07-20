@@ -15,7 +15,7 @@
     @Test("QuantumSimulator")
     operation CountingUnitTest () : Unit {
         mutable inputLength = 3;
-        let val1 = Counting(oracle1, inputLength);
+        let val1 = QuantumCounting(oracle1, inputLength);
         if val1 == 1 {
             Message("Test passed.");
         }
