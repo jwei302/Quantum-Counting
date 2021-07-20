@@ -9,7 +9,7 @@ namespace final_project_algorithm.counting {
 
 	operation GetPhase(oracle : (Qubit[], Qubit) => Unit is Ctl + Adj, numberOfQubits : Int): Double {
 		use counting = Qubit[numberOfQubits];
-		
+		use input = Qubit[numberOfQubits];
 		use target = Qubit();
 		X(target);
 		ApplyToEach(H,counting);
