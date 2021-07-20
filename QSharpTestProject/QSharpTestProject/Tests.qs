@@ -6,10 +6,10 @@
     open final_project_algorithm.counting;
 
 
-    operation oracle1(register : Qubit[], output : Qubit) : Unit {
-        ApplyToEach(X, register);
+    operation oracle1(register : Qubit[], output : Qubit) : Unit is Ctl + Adj {
+        ApplyToEachCA(X, register);
         Controlled Z(register, output);
-        ApplyToEach(X, register);
+        ApplyToEachCA(X, register);
     }
 
     @Test("QuantumSimulator")
