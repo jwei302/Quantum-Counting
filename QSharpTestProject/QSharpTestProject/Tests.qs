@@ -2,10 +2,8 @@
     open Microsoft.Quantum.Canon;
     open Microsoft.Quantum.Diagnostics;
     open Microsoft.Quantum.Intrinsic;
-    open FinalProjectAlgorithm;
-    
-    
-    @Test("QuantumSimulator")
+    open final_project_algorithm;
+    open final_project_algorithm.counting;
 
 
     operation oracle1(register : Qubit[], output : Qubit) : Unit {
@@ -13,6 +11,8 @@
         Controlled Z(register, output);
         ApplyToEach(X, register);
     }
+
+    @Test("QuantumSimulator")
     operation CountingUnitTest () : Unit {
         mutable inputLength = 3;
         let val1 = Counting(oracle1, inputLength);

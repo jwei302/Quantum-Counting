@@ -4,7 +4,7 @@ namespace final_project_algorithm.counting {
     open Microsoft.Quantum.Intrinsic;
     open Microsoft.Quantum.Math;
 	open Microsoft.Quantum.Arithmetic;
-	open QSharpTestProject;
+	open final_project_algorithm;
 
 	operation Counting (oracle : (Qubit[], Qubit) => Unit, numberOfQubits : Int): Int {
 		let n = numberOfQubits;

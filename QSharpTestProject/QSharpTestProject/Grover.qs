@@ -1,4 +1,4 @@
-﻿namespace QSharpTestProject {
+﻿namespace final_project_algorithm {
 
     open Microsoft.Quantum.Canon;
     open Microsoft.Quantum.Intrinsic;
