@@ -14,7 +14,6 @@ namespace final_project_algorithm.counting {
 
 		ApplyToEach(H,counting);
 		ApplyToEach(H,input);
-		X(target);
 
 		for i in 0..(numberOfQubits-1) {
 			for j in 0..(PowI(2,i)-1) {
@@ -23,8 +22,9 @@ namespace final_project_algorithm.counting {
 		}
 		Adjoint QFT(BigEndian(counting));
 
-		ResetAll(counting + input + [target]);
+		
 		let num = MeasureInteger(BigEndianAsLittleEndian(BigEndian(counting)));
+		ResetAll(counting + input + [target]);
 		return IntAsDouble(num)/PowD(2.0,IntAsDouble(numberOfQubits));
 	}
 
