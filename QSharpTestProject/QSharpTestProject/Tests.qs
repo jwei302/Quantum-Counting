@@ -16,9 +16,7 @@
     } // 1 solution
 
     operation oracle2(register: Qubit[], output : Qubit) : Unit is Ctl + Adj {
-        ApplyToEachCA(X, register[0..2..2]);
-        Controlled Z(register[0..2..2], output);
-        ApplyToEachCA(X, register[0..2..2]);
+        Controlled Z(register[0..1], output);
     } // 2 solution
 
     operation oracle3(register: Qubit[], output: Qubit) : Unit is Ctl + Adj {
@@ -27,6 +25,28 @@
 
     operation oracle4(register: Qubit[], output: Qubit) : Unit is Ctl + Adj{
         Controlled Z(register[0..1], output);
+    }
+
+    operation findNumSols(inputLength: Int,oracle: ((Qubit[],Qubit)=>Unit is Ctl + Adj)): Int{
+        mutable numSols = 0;
+        for i in 0..PowI(2,inputLength)-1{
+            use input = Qubit[inputLength];
+            use output = Qubit();
+            H(output);
+            let arr = BigIntAsBoolArray(IntAsBigInt(i));
+            for j in 0..Length(arr)-1{
+                if(arr[j]){
+                    X(input[j]);
+                }
+            }
+            oracle(input,output);
+            H(output);
+            if(M(output) == One){
+                set numSols += 1;
+            }
+            ResetAll(input+[output]);
+        }
+        return numSols;
     }
     @Test("QuantumSimulator")
     operation GroverUnitTest () : Unit {
@@ -52,18 +72,21 @@
 
     @Test("QuantumSimulator")
     operation CountingUnitTest () : Unit {
+
+        let chosenOracle = oracle2;
         mutable inputLength = 3;
-        let phase = GetPhase(oracle4, inputLength);
+        let phase = GetPhase(chosenOracle, inputLength);
         Message($"The estimate for phase is: {phase}");
         let amp = GetAmplitude(phase);
         Message($"The estimate for amplitude is: {amp}");
         let count = GetCount(phase,inputLength);
         Message($"The estimate for count is: {count}");
-        if count == 1 {
+        let numSols = findNumSols(inputLength,chosenOracle);
+        Message($"The number of correct solutions is: {numSols}");
+        if count == numSols {
             Message("Test passed.");
-        }
-        else{
-            fail $"Test failed. Found number of solutions to be {count} when it should be 1";
+        }else{
+            fail $"Test failed. ";
         }
     }
 }
