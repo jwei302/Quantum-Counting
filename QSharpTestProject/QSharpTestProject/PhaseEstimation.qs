@@ -8,7 +8,8 @@ namespace final_project_algorithm.counting {
 
 
 	operation GetPhase(oracle : (Qubit[], Qubit) => Unit is Ctl + Adj, numberOfQubits : Int): Double {
-		use counting = Qubit[numberOfQubits];
+		let countingLength = numberOfQubits+5;
+		use counting = Qubit[countingLength];
 		use input = Qubit[numberOfQubits];
 		use target = Qubit();
 		X(target);
@@ -16,7 +17,7 @@ namespace final_project_algorithm.counting {
 		ApplyToEach(H,input);
 		
 
-		for i in 0..(numberOfQubits-1) {
+		for i in 0..(countingLength-1) {
 			for j in 0..(PowI(2,i)-1) {
 				Controlled GroverIteration([counting[i]], (input, target, oracle));
 			}
@@ -27,7 +28,7 @@ namespace final_project_algorithm.counting {
 		let num = MeasureInteger(LittleEndian(counting));
 		ResetAll(counting + [target] + input);
 		
-		return (IntAsDouble(num)/PowD(2.0,IntAsDouble(numberOfQubits))) * PI() * 2.0;
+		return (IntAsDouble(num)/PowD(2.0,IntAsDouble(countingLength))) * PI() * 2.0;
 	}
 
 	operation GetAmplitude(phase: Double): Double{
