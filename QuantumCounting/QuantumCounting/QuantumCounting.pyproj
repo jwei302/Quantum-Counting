@@ -12,6 +12,7 @@
     <Name>QuantumCounting</Name>
     <RootNamespace>QuantumCounting</RootNamespace>
     <InterpreterId>CondaEnv|CondaEnv|qiskit</InterpreterId>
+    <TestFramework>Pytest</TestFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
