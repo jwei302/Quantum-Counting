@@ -11,7 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>QuantumCounting</Name>
     <RootNamespace>QuantumCounting</RootNamespace>
-    <InterpreterId>CondaEnv|CondaEnv|qiskit</InterpreterId>
+    <InterpreterId>Global|VisualStudio|qiskit-env</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +32,7 @@
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="CondaEnv|CondaEnv|qiskit" />
+    <InterpreterReference Include="Global|VisualStudio|qiskit-env" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
