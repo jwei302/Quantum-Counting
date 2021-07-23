@@ -93,7 +93,10 @@ def run_unit_tests():
             if pretest(oracle, inputLength):
                 num_correct += 1
             total += 1
-
+    if num_correct/total >= 0.9:
+        print("Passed Successfully")
+    else:
+        print("Unsuccessful")
 
 if __name__ == '__main__':
     run_unit_tests()
