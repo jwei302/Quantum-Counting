@@ -23,6 +23,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CorrectQuantumComputing.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Grovers.py">
       <SubType>Code</SubType>
     </Compile>
