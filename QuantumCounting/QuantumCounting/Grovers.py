@@ -18,12 +18,12 @@ def DiffusionOperator(circuit, register):
     FlipPhaseIfAllZeros(circuit,register)
     circuit.h(register)
 
-def GroverIteration(circuit, input, oracle, num_controlled_bits):
+def GroverIteration(input, oracle, num_controlled_bits):
     qc = QuantumCircuit(len(input))
     oracle(qc,input)
     DiffusionOperator(qc,input)
     custom = qc.to_gate().control(num_controlled_bits)
-    circuit.append(qc,input)
+    return qc
 
 
 def UnitTest():
