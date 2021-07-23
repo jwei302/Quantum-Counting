@@ -40,7 +40,7 @@ def get_phase(oracle, num_qubits):
 	circuit.h(counting)
 	circuit.h(input)
 
-	grover_gate = GroverIteration().to_gate()
+	grover_gate = GroverIteration(input, oracle).to_gate()
 	cgrover_gate = grover_gate.control()
 
 	IQFT = qft(num_qubits).to_gate().inverse()
