@@ -47,7 +47,7 @@ def get_phase(oracle, num_qubits):
 
 	for i in range(counting_length):
 		for j in range(2**i):
-			circuit.append(cgrover_gate, [i] + [*range(countingLength, num_qubits+countingLength)])
+			circuit.append(cgrover_gate, [i] + [*range(counting_length, num_qubits+counting_length)])
 	
 	circuit.append(IQFT, range(counting_length))
 
