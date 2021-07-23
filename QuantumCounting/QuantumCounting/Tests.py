@@ -1,7 +1,8 @@
 from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister
 from qiskit import execute
 from qiskit import Aer
-
+import QuantumCounting
+import numpy as np
 
 def toffoli_chain(circuit, register, output, function):
     length = len(register)
@@ -50,16 +51,49 @@ def oracle2(circuit, register, output):
     circuit.h(register[2])
     
 
-def pretest(circuit, register, output, oracle):
-    phase = GET_PHASE(circuit, register, oracle)
+def num_sols(oracle, inputLength):
+    num_sols = 0
+    
+    for i in range(2**inputLength):
+        register = QuantumRegister(inputLength)
+        output = QuantumRegister(1)
+        circuit = QuantumCircuit(register, output)
+        circuit.h(output)
+        arr = np.bit_repr(i)
+
+        for j in range(len(arr)):
+            if arr[j]:
+                circuit.x(input[j])
+        oracle(input, output)
+        circuit.h(output)
+        simulator = Aer.get_backend('aer_simulator')
+        simulation = execute(circuit, simulator, shots=1)
+        result = simulation.result()
+        counts = result.get_counts(circuit)
+
+        for (measured_state, count) in counts.items():
+
+            if measured_state == '1':
+                num_sols+=1
+    return num_sols
+
+
+    return num_sols
+def pretest(oracle, inputLength):
+    phase = get_phase(oracle, inputLength)
+    amplitude = get_amplitude(phase)
+    count = get_count(phase, inputLength)
+    real_count = num_sols(output, inputLength)
+    return count == real_count
 def run_unit_tests():
     maxLength = 5
+    num_correct, total = 0, 0
     for inputLength in range(2, maxLength+1):
         for oracle in [oracle1, oracle2]:
-            register = QuantumRegister(inputLength, "register")
-            output = QuantumRegister(1, "output")
-            circuit = QuantumCircuit(register, output)
-            pretest(circuit, register, output, oracle)
+            if pretest(oracle, inputLength):
+                num_correct += 1
+            total += 1
+
 
 if __name__ == '__main__':
     run_unit_tests()

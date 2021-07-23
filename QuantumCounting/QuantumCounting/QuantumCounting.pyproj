@@ -11,7 +11,8 @@
     <OutputPath>.</OutputPath>
     <Name>QuantumCounting</Name>
     <RootNamespace>QuantumCounting</RootNamespace>
-    <InterpreterId>Global|VisualStudio|qiskit-env</InterpreterId>
+    <InterpreterId>CondaEnv|CondaEnv|qiskit</InterpreterId>
+    <TestFramework>Pytest</TestFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
