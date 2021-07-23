@@ -23,8 +23,7 @@ def GroverIteration(circuit, input, oracle, num_controlled_bits):
     oracle(qc,input)
     DiffusionOperator(qc,input)
     custom = qc.to_gate().control(num_controlled_bits)
-    circuit.append(qc,???????????)
-
+    circuit.append(qc,input)
 
 
 def UnitTest():
