@@ -33,7 +33,7 @@ def get_phase(oracle, num_qubits):
 	counting = QuantumRegister(counting_length)
 	input = QuantumRegister(num_qubits + 1)
 	# target = QuantumRegister(1)
-	out = ClassicalRegister()
+	out = ClassicalRegister(countring_length)
 	circuit = QuantumCircuit(counting, input)
 
 	circuit.x(target)
@@ -51,9 +51,14 @@ def get_phase(oracle, num_qubits):
 	
 	circuit.append(IQFT, range(counting_length))
 
-	# num = MeasureInteger(LittleEndian(counting))
+	circuit.measure(counting, output)
 
-	## TODO: Run the program on a simulator and parse number as an integer
+	## Run the program on a simulator and parse number as an integer
+	simulator = Aer.get_backend('aer_simulator')
+	result = simulator.run(circuit).result()
+	counts = result.get_counts()
+	measured_str = max(counts, key=counts.get)
+	num = int(measured_string, 2)
 
 	return num/2.0**counting_length * math.pi * 2.0;
 
