@@ -5,9 +5,9 @@ import math
 from Grovers import GroverIteration
 
 # Helper QFT function
-def qft(n, t):
+def qft(n):
     """Creates an n-qubit QFT circuit"""
-    circuit = QuantumCircuit(t)
+    circuit = QuantumCircuit(n)
     def swap_registers(circuit, n):
         for qubit in range(n//2):
             circuit.swap(qubit, n-qubit-1)
@@ -43,7 +43,7 @@ def get_phase(oracle, num_qubits):
 	grover_gate = GroverIteration.to_gate()
 	cgrover_gate = grover_gate.control()
 
-	IQFT = qft(num_qubits, counting_length).to_gate().inverse()
+	IQFT = qft(num_qubits).to_gate().inverse()
 
 	for i in range(counting_length):
 		for j in range(2**i):
