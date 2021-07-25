@@ -42,7 +42,7 @@
         }
     }
     //Prep register into an integer state in BigEndian
-    operation PrepBE(reg: Qubit[],state: Int): Unit{
+    operation PrepBE(reg: Qubit[],state: Int): Unit is Ctl + Adj{
         let arr = BigIntAsBoolArray(IntAsBigInt(state));
         for i in 0..Length(arr)-1{
             if(arr[i]){
@@ -112,5 +112,11 @@
         if(debug){
             Message(text);
         }
+    }
+    //Copys register 1 into register 2
+    operation Copy(reg1 : Qubit[], reg2 : Qubit[]): Unit is Ctl + Adj{
+        for i in 0..Length(reg1)-1{
+            CX(reg1[i], reg2[i]);
+		}
     }
 }
