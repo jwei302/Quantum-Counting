@@ -2,9 +2,8 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>bff92ecb-8c08-44e4-bbe1-8450c461dd82</ProjectGuid>
-    <ProjectHome>
-    </ProjectHome>
+    <ProjectGuid>c28a58f1-d21e-4334-9512-de7b533ef47f</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
     <StartupFile>
     </StartupFile>
     <SearchPath>
@@ -12,7 +11,7 @@
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>PythonProject</Name>
-    <RootNamespace>ImageClassification</RootNamespace>
+    <RootNamespace>PythonProject</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,6 +21,27 @@
     <DebugSymbols>true</DebugSymbols>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="GLCM.py" />
+    <Compile Include="ImageHandler.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\airplane1.bmp" />
+    <Content Include="Images\airplane2.bmp" />
+    <Content Include="Images\airplane3.bmp" />
+    <Content Include="Images\airplane4.bmp" />
+    <Content Include="Images\airplane5.bmp" />
+    <Content Include="Images\airplaneT.bmp" />
+    <Content Include="Images\beaver1.bmp" />
+    <Content Include="Images\beaver2.bmp" />
+    <Content Include="Images\beaver3.bmp" />
+    <Content Include="Images\beaver4.bmp" />
+    <Content Include="Images\beaver5.bmp" />
+    <Content Include="Images\beaverT.bmp" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
        Visual Studio and specify your pre- and post-build commands in
