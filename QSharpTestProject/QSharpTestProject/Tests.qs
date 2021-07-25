@@ -32,9 +32,9 @@
 
     operation findNumSols(inputLength: Int,oracle: ((Qubit[],Qubit)=>Unit is Ctl + Adj)): Int{
         mutable numSols = 0;
+        use input = Qubit[inputLength];
+        use output = Qubit();
         for i in 0..PowI(2,inputLength)-1{
-            use input = Qubit[inputLength];
-            use output = Qubit();
             H(output);
             let arr = BigIntAsBoolArray(IntAsBigInt(i));
             for j in 0..Length(arr)-1{

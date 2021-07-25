@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageClassification", "ImageClassification\ImageClassification.csproj", "{4961ABEE-CA3D-4401-A053-D17B69D2C07C}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ImageClassification", "ImageClassification\ImageClassification.pyproj", "{BFF92ECB-8C08-44E4-BBE1-8450C461DD82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,13 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4961ABEE-CA3D-4401-A053-D17B69D2C07C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4961ABEE-CA3D-4401-A053-D17B69D2C07C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4961ABEE-CA3D-4401-A053-D17B69D2C07C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4961ABEE-CA3D-4401-A053-D17B69D2C07C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFF92ECB-8C08-44E4-BBE1-8450C461DD82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFF92ECB-8C08-44E4-BBE1-8450C461DD82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {776C0EE8-29E3-4B6D-AA18-48274586847A}
+		SolutionGuid = {6AF95359-8752-4562-A72A-3B729B51F563}
 	EndGlobalSection
 EndGlobal
