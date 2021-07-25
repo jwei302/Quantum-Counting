@@ -8,7 +8,7 @@ namespace final_project_algorithm.counting {
 
 
 	operation GetPhase(oracle : (Qubit[], Qubit) => Unit is Ctl + Adj, numberOfQubits : Int): Double {
-		let countingLength = numberOfQubits+5;
+		let countingLength = numberOfQubits+6;
 		use counting = Qubit[countingLength];
 		use input = Qubit[numberOfQubits];
 		use target = Qubit();
