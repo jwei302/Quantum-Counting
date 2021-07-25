@@ -53,13 +53,13 @@
     }
     operation TestCounting(inputLength : Int, oracle: ((Qubit[],Qubit)=>Unit is Ctl + Adj)): Bool{
         let phase = GetPhase(oracle, inputLength);
-        //Message($"The estimate for phase is: {phase}");
+        Message($"The estimate for phase is: {phase}");
         let amp = GetAmplitude(phase);
         //Message($"The estimate for amplitude is: {amp}");
         let count = GetCount(phase,inputLength);
-        //Message($"The estimate for count is: {count}");
+        Message($"The estimate for count is: {count}");
         let numSols = findNumSols(inputLength,oracle);
-        //Message($"The number of correct solutions is: {numSols}");
+        Message($"The number of correct solutions is: {numSols}");
         if count == numSols {
             //Message("Test passed.");
             return true;

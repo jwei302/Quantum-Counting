@@ -3,6 +3,7 @@ from qiskit import execute
 from qiskit import Aer
 import math
 from Grovers import GroverIteration
+from Tests import *
 
 # Helper QFT function
 def qft(n):
@@ -32,11 +33,11 @@ def get_phase(oracle, num_qubits):
 	
 	counting = QuantumRegister(counting_length)
 	input = QuantumRegister(num_qubits + 1)
-	# target = QuantumRegister(1)
-	out = ClassicalRegister(countring_length)
+	
+	out = ClassicalRegister(counting_length)
 	circuit = QuantumCircuit(counting, input)
 
-	circuit.x(target)
+	circuit.x(input[-1])
 	circuit.h(counting)
 	circuit.h(input)
 
@@ -47,7 +48,8 @@ def get_phase(oracle, num_qubits):
 
 	for i in range(counting_length):
 		for j in range(2**i):
-			circuit.append(cgrover_gate, [i] + [*range(counting_length, num_qubits+counting_length)])
+			toffoli_chain(circuit,counting,)
+			#circuit.append(cgrover_gate, [i] + [*range(counting_length, num_qubits+counting_length)])
 	
 	circuit.append(IQFT, range(counting_length))
 

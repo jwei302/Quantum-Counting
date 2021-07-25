@@ -1,8 +1,9 @@
 from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister
 from qiskit import execute
 from qiskit import Aer
-import QuantumCounting
+from QuantumCounting import *
 import numpy as np
+
 
 def toffoli_chain(circuit, register, output, function):
     length = len(register)
@@ -29,10 +30,10 @@ def toffoli_chain(circuit, register, output, function):
 
         circuit.x(register)
 
-def oracle1(circuit, register, output):
+def oracle1(circuit, register):
     circuit.x(register)
     
-    toffoli_chain(circuit, register, output, circuit.cz)
+    toffoli_chain(circuit, register, register[-1], circuit.cz)
 
     circuit.x(register)
 
