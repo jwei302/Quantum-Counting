@@ -69,7 +69,7 @@
         return BoolArrayAsInt(ReverseBoolArray(arr));
     }
     //Apply in place XOR on reg1 and reg2 (results are in reg2)
-    operation Xor(reg1: Qubit[],reg2: Qubit[]): Unit{
+    operation Xor(reg1: Qubit[],reg2: Qubit[]): Unit is Ctl + Adj{
         for i in 0..Length(reg1)-1{
             CNOT(reg1[i],reg2[i]);
         }
@@ -107,16 +107,24 @@
 	
         return arr;
     }
+
+    operation MandMInt(name: String, reg : Qubit[]):Unit{
+        let o = MeasureAndMessage("reg", reg, false);
+        let i = BoolArrayAsIntBE(o);
+        Message($"{name} is in state: {i}");
+    }
     //Message the text if debugging
     operation MessageAndDebug(text: String, debug: Bool): Unit{
         if(debug){
             Message(text);
         }
     }
-    //Copys register 1 into register 2
-    operation Copy(reg1 : Qubit[], reg2 : Qubit[]): Unit is Ctl + Adj{
+    //Swaps two registers
+    operation SwapReg(reg1 : Qubit[], reg2 : Qubit[]): Unit is Ctl + Adj{
         for i in 0..Length(reg1)-1{
-            CX(reg1[i], reg2[i]);
-		}
+            SWAP(reg1[i], reg2[i]);
+        }
     }
+
+    
 }

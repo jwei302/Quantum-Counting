@@ -29,11 +29,13 @@
                     use reg2 = Qubit[length];
                     //Init target qubit
                     use target = Qubit();
+                    //Init flag qubit
+                    use flags = Qubit[Length(reg1)+2];
                     //Prep reg1 and reg2 in their respective states
                     PrepBE(reg1, reg1State);
                     PrepBE(reg2, reg2State);
                     //Compare reg1 and reg2 and flip target if reg1 > reg2
-                    QuantumComparator(reg1,reg2,target);
+                    QuantumComparator(reg1,reg2,target, flags);
                     //Measure all the qubits
                     let reg1M = MeasureAndMessage("Reg1", reg1, debug);
                     let reg2M = MeasureAndMessage("Reg2",reg2, debug);
@@ -52,7 +54,7 @@
                         MessageAndDebug($"Incorrect compasison made, guess: {guess}, real:{real}", debug);
                     }
                     //Reset all qubits
-                    ResetAll(reg1+reg2+[target]);
+                    ResetAll(reg1+reg2+[target]+flags);
                     //Increment total number of tries
                     set numTotal += 1;
 		        }
@@ -67,24 +69,21 @@
     }
 
     //Accepts input as Big Endian Registers and flips o if r > p
-    //Algorithm is O(log(n)) worst case
-    operation QuantumComparator(r: Qubit[], p: Qubit[], o : Qubit): Unit{
-        //Flag qubit
-        use f = Qubit();
+    //Algorithm is O(log(n)) worst case 
+    //flages is used for internal operations must be provided as |0> with length 
+    //Length(r)+2
+    operation QuantumComparator(r: Qubit[], p: Qubit[], output : Qubit, flags : Qubit[]): Unit is Ctl + Adj{
+        
         //Set to |1>
-        X(f);
+        X(flags[0]);
+        X(flags[Length(r)+1]);
         //For each qubit in r and p
         for i in 0..Length(r)-1{
-            //Ancillia qubit to get the comparison result of bits
-            use s = Qubit();
             //Compare bits
-            Controlled FlagAndOut([f], (r[i],p[i],s,o));
-            //Move comparison into f
-            CNOT(s,f);
-           
-            Reset(s);
+            Controlled FlagAndOut([flags[i]], (r[i],p[i],flags[Length(r)+1],output));
+            CCNOT(flags[Length(r)+1],flags[i], flags[i+1]);
         }
-        Reset(f);
+        
     }
 
     //Compares bits r and p 
