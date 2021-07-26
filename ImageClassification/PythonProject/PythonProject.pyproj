@@ -23,6 +23,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GLCM.py" />
+    <Compile Include="ImageClassifier.py" />
     <Compile Include="ImageHandler.py" />
   </ItemGroup>
   <ItemGroup>
