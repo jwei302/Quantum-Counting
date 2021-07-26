@@ -68,7 +68,7 @@
 
     //Accepts input as Big Endian Registers and flips o if r > p
     //Algorithm is O(log(n)) worst case
-    operation QuantumComparator(r: Qubit[], p: Qubit[], o : Qubit): Unit{
+    operation QuantumComparator(r: Qubit[], p: Qubit[], o : Qubit): Unit {
         //Flag qubit
         use f = Qubit();
         //Set to |1>
