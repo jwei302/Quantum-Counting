@@ -46,7 +46,7 @@
         let amplitude = PowD(Sin((IntAsDouble(cAsInt)/PowD(2.0,IntAsDouble(Length(c)))) * PI() * 2.0),2.0);
         //let prob = 1.0-PowD(Sin(IntAsDouble(cAsInt)*PI()/PowD(2.0,7.0)), 2.0);
         //Message("Prob:" + DoubleAsString(prob));
-        Message("Amplitude:" + DoubleAsString(amplitude));
+        //Message("Amplitude:" + DoubleAsString(amplitude));
         ResetAll(ampQ+c);
         ResetAll([target]);
 
