@@ -34,7 +34,7 @@
         //Make ampQ have 0.5 probablity for |1>
 		//H(ampQ[0]);
     //        X(ampQ[1]);
-	    Ry(2.0*ArcSin(0.0),ampQ[0]);
+	    Ry(2.0*ArcSin(Sqrt(0.0)),ampQ[0]);
         //Apply amplitude estimator
         AmplitudeEstimator(ampQ, target, c);
         //Measure counting register
@@ -66,7 +66,6 @@
 		}
 
 		Adjoint QFTLE(LittleEndian(counting));
-	
 		
 	}
 	//This operation flips the phase of the target qubit if the register is in the 0 state
