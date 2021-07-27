@@ -29,6 +29,9 @@
     <Compile Include="Correct.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Correct1.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Tests.py">
       <SubType>Code</SubType>
     </Compile>

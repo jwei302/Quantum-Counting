@@ -1,3 +1,4 @@
+
 import numpy as np
 import math
 
@@ -13,20 +14,10 @@ from qiskit import execute
 
 def example_grover_iteration():
     # Do circuit
-    qc = QuantumCircuit(4)
+    l = 4
+    qc = QuantumCircuit(l)
     # Oracle
-    qc.h([2,3])
-    qc.ccx(0,1,2)
-    qc.h(2)
-    qc.x(2)
-    qc.ccx(0,2,3)
-    qc.x(2)
-    qc.h(3)
-    qc.x([1,3])
-    qc.h(2)
-    qc.mct([0,1,3],2)
-    qc.x([1,3])
-    qc.h(2)
+    
     # Diffuser
     qc.h(range(3))
     qc.x(range(3))
