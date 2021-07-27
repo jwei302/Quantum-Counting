@@ -26,29 +26,49 @@
         //Minimuim rate for success (should be 100 for non probabistic algorithms)
         let minRate = 100.0;
         //qubit with amp
+
+        use j = Qubit[3];
         use ampQ = Qubit[1];
+        ApplyToEach(H, j);
+        use extrasY = Qubit[Length(j)];
+        for i in 0..PowI(2, Length(j))-1{
+            AreRegIntEqual(j,i,extrasY);
+            Controlled Ry(extrasY, (IntAsDouble(i)*PI()/3.0, ampQ[0]));
+            Adjoint AreRegIntEqual(j,i,extrasY);
+        }
+
+        //Controlled Ry(j, (2.0*ArcSin(Sqrt(0.0)),ampQ[0]));
+        
+
+        //Ry(2.0*ArcSin(Sqrt(0.0)),ampQ[0]);
+        //H(ampQ[0]);
+        //X(ampQ[0]);
+
+       
         //counting qubits
         use c = Qubit[7];
         //target qubit
         use target = Qubit();
         //Make ampQ have 0.5 probablity for |1>
-		//H(ampQ[0]);
-    //        X(ampQ[1]);
-	    Ry(2.0*ArcSin(Sqrt(0.0)),ampQ[0]);
+		//Controlled ApplyToEachCA(ampQ, (X, input));
+	    
         //Apply amplitude estimator
-        AmplitudeEstimator(ampQ, target, c);
+        AmplitudeEstimator(j, target, c);
         //Measure counting register
         let cM = MeasureAndMessage("C",c, debug);
+
+        MandMInt("j", j);
         //Calculate counting as int
         let cAsInt = BoolArrayAsInt(cM);
         Message("C:" + IntAsString(cAsInt));
         //Calc probablity based on c
+
         let amplitude = PowD(Sin((IntAsDouble(cAsInt)/PowD(2.0,IntAsDouble(Length(c)))) * PI() * 2.0),2.0);
-        //let prob = 1.0-PowD(Sin(IntAsDouble(cAsInt)*PI()/PowD(2.0,7.0)), 2.0);
-        //Message("Prob:" + DoubleAsString(prob));
-        //Message("Amplitude:" + DoubleAsString(amplitude));
+        let prob = 1.0-PowD(Sin(IntAsDouble(cAsInt)*PI()/PowD(2.0,7.0)), 2.0);
+        Message("Prob:" + DoubleAsString(prob));
+        Message("Amplitude:" + DoubleAsString(amplitude));
         ResetAll(ampQ+c);
-        ResetAll([target]);
+        ResetAll([target]+j+extrasY);
 
     }
 
@@ -58,6 +78,7 @@
     
 	operation AmplitudeEstimator(input: Qubit[], target : Qubit, counting: Qubit[]): Unit is Ctl + Adj{
 		X(target);
+        //ApplyToEachCA(H,input);
         ApplyToEachCA(H,counting);
 		for i in 0..(Length(counting)-1) {
 			for j in 0..(PowI(2,i)-1) {
