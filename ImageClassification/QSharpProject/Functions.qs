@@ -126,5 +126,29 @@
         }
     }
 
+
+    operation AreRegIntEqual(reg : Qubit[], state : Int, flags : Qubit[]): Unit is Ctl + Adj{
+        let arr = BigIntAsBoolArray(IntAsBigInt(state));
+        for i in 0..Length(arr)-1{
+            if(arr[i]){
+                CX(reg[Length(reg)-1-i], flags[Length(reg)-1-i]);
+            }elif (i < Length(reg)){
+                X(reg[Length(reg)-1-i]);
+                CX(reg[Length(reg)-1-i], flags[Length(reg)-1-i]);
+                X(reg[Length(reg)-1-i]);
+            }
+        }
+    }
+
+    //operation Copy(reg1 : Qubit[], reg2 : Qubit[]){
+    //        for i in 0..Length(reg1)-1{
+    //            use flag = Qubit();
+    //            CX(reg1[i], flag);
+    //            CX(reg1[2], flag);
+    //            CX(flag, reg2[i]);
+    //           
+    //	    }
+    //    }
+
     
 }

@@ -16,7 +16,7 @@
 
 
     @Test("QuantumSimulator")
-    operation TestAE () : Unit {
+    operation TestAE () : Unit{
         //If you want to see detailed output set this to true
         let debug = true;
         //Number of correct tries
@@ -25,54 +25,48 @@
         mutable numTotal = 0;
         //Minimuim rate for success (should be 100 for non probabistic algorithms)
         let minRate = 100.0;
-
-        use ampQ = Qubit();
+        //qubit with amp
+        use ampQ = Qubit[1];
+        //counting qubits
         use c = Qubit[7];
-        //Ry(2.0*ArcSin(0.8),ampQ);
-        H(ampQ);
-        AmplitudeEstimator(ampQ, c);
-        //DumpRegister((),[ampQ]+c);
+        //target qubit
+        use target = Qubit();
+        //Make ampQ have 0.5 probablity for |1>
+		//H(ampQ[0]);
+    //        X(ampQ[1]);
+	    Ry(2.0*ArcSin(0.0),ampQ[0]);
+        //Apply amplitude estimator
+        AmplitudeEstimator(ampQ, target, c);
+        //Measure counting register
         let cM = MeasureAndMessage("C",c, debug);
+        //Calculate counting as int
         let cAsInt = BoolArrayAsInt(cM);
-        let prob = 1.0-PowD(Sin(IntAsDouble(cAsInt)*PI()/PowD(2.0,7.0)), 2.0);
-        Message(DoubleAsString(prob));
-        let ampM = MeasureAndMessage("ampQ",[ampQ], debug);
-        ResetAll([ampQ]+c);
+        Message("C:" + IntAsString(cAsInt));
+        //Calc probablity based on c
+        let amplitude = PowD(Sin((IntAsDouble(cAsInt)/PowD(2.0,IntAsDouble(Length(c)))) * PI() * 2.0),2.0);
+        //let prob = 1.0-PowD(Sin(IntAsDouble(cAsInt)*PI()/PowD(2.0,7.0)), 2.0);
+        //Message("Prob:" + DoubleAsString(prob));
+        Message("Amplitude:" + DoubleAsString(amplitude));
+        ResetAll(ampQ+c);
+        ResetAll([target]);
 
     }
 
-    operation IfOneFlipPhase(ampQ : Qubit, input : Qubit, target: Qubit):Unit is Ctl + Adj{
-        //CZ(input,target);
-        use flag = Qubit();
-        CX(ampQ, flag);
-        CX(input, flag);
-        CX(flag, input);
-        CZ(input, target);
-        CX(flag, input);
-        CX(ampQ, flag);
-        CX(input, flag);
-       // ApplyToEachCA(X,[ampQ]+[input]);
-    //        Controlled Z([ampQ]+[input],target);
-    //        ApplyToEachCA(X,[ampQ]+[input]);
+    operation IfOneFlipPhase(input : Qubit[], target: Qubit):Unit is Ctl + Adj{
+        Controlled Z(input,target);
     }
     
-	operation AmplitudeEstimator(ampQ: Qubit, counting: Qubit[]): Unit {
-		use input = Qubit();
-		use target = Qubit();
+	operation AmplitudeEstimator(input: Qubit[], target : Qubit, counting: Qubit[]): Unit is Ctl + Adj{
 		X(target);
-		H(input);
-        ApplyToEach(H,counting);
-		
-
+        ApplyToEachCA(H,counting);
 		for i in 0..(Length(counting)-1) {
 			for j in 0..(PowI(2,i)-1) {
-				Controlled GroverIteration([counting[i]], (ampQ,input, target));
+				Controlled GroverIteration([counting[i]], (input, target));
 			}
 		}
 
 		Adjoint QFTLE(LittleEndian(counting));
-		
-		ResetAll([target] + [input]);
+	
 		
 	}
 	//This operation flips the phase of the target qubit if the register is in the 0 state
@@ -92,9 +86,9 @@
         ApplyToEachCA(H,register); //Apply H all
     }
 
-    operation GroverIteration (ampQ: Qubit, input: Qubit, target: Qubit) : Unit is Ctl + Adj{
-        IfOneFlipPhase(ampQ, input,target); //Apply the oracle
-        DiffusionOperator([input], target); //Apply the diffusion operator
+    operation GroverIteration (input: Qubit[], target: Qubit) : Unit is Ctl + Adj{
+        IfOneFlipPhase(input,target); //Apply the oracle
+        DiffusionOperator(input, target); //Apply the diffusion operator
     }
 
     
