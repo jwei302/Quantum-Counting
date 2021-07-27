@@ -30,8 +30,9 @@
         use j = Qubit[3];
         use ampQ = Qubit[1];
         ApplyToEach(H, j);
-        use extrasY = Qubit[Length(j)];
+        
         for i in 0..PowI(2, Length(j))-1{
+            use extrasY = Qubit[Length(j)];
             AreRegIntEqual(j,i,extrasY);
             Controlled Ry(extrasY, (IntAsDouble(i)*PI()/3.0, ampQ[0]));
             Adjoint AreRegIntEqual(j,i,extrasY);
@@ -68,7 +69,7 @@
         Message("Prob:" + DoubleAsString(prob));
         Message("Amplitude:" + DoubleAsString(amplitude));
         ResetAll(ampQ+c);
-        ResetAll([target]+j+extrasY);
+        ResetAll([target]+j);
 
     }
 
