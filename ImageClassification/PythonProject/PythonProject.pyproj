@@ -22,6 +22,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ampest.py" />
     <Compile Include="GLCM.py" />
     <Compile Include="ImageClassifier.py" />
     <Compile Include="ImageHandler.py" />

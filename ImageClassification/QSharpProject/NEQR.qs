@@ -89,22 +89,19 @@
                 //Make quantum versions of i and j
                 use extrasM = Qubit[Length(m)];
                 use extrasN = Qubit[Length(n)];
-                PrepBE(extrasM,i); 
-                PrepBE(extrasN,j); 
+                AreRegIntEqual(m, i, extrasM);
+                AreRegIntEqual(n, j, extrasN);
                 //If m == i and n == i then rot(r)
-                Xor(m,extrasM);
-                Xor(n,extrasN);
-                ApplyToEach(X,extrasM);
-                ApplyToEach(X,extrasN);
                 Controlled rot (extrasM+extrasN,(GetDouble2d(i,j,amps),r));
-                ResetAll(extrasM+extrasN);
+                Adjoint AreRegIntEqual(n, j, extrasN);
+                Adjoint AreRegIntEqual(m, i, extrasM);
             }
 		}
         
     }
     //Rotate r so that the amplitude is encoded into the state
     operation rot(amp: Double, qb: Qubit):Unit is Ctl + Adj{
-        Ry(2.0*ArcSin(amp), qb);
+        Ry(2.0*ArcSin(Sqrt(amp)), qb);
     }
 
   

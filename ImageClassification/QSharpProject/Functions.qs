@@ -32,6 +32,23 @@
             }
         }
      }
+     //Tests Copy
+    @Test("QuantumSimulator")
+    operation TestCopy () : Unit {
+        //For all lengths 1-5 and i's
+        for i in 0..30{
+            use q1 = Qubit();
+            use q2 = Qubit();
+            use accReg = Qubit[6];
+            Ry(2.0*ArcSin(Sqrt(0.5)), q1);
+            DumpRegister((),[q1]);
+            CopyQubit(q1,q2, accReg);
+            MandMInt("q1", [q1]);
+            MandMInt("q2", [q2]);
+            ResetAll([q1]+[q2]);
+            ResetAll(accReg);
+	    }
+     }
 	//Prep register into an integer state in LittleEndian
     operation PrepLE(reg: Qubit[],state: Int): Unit{
         let arr = BigIntAsBoolArray(IntAsBigInt(state));
@@ -124,6 +141,33 @@
         for i in 0..Length(reg1)-1{
             SWAP(reg1[i], reg2[i]);
         }
+    }
+
+
+    operation AreRegIntEqual(reg : Qubit[], state : Int, flags : Qubit[]): Unit is Ctl + Adj{
+        let arr = BigIntAsBoolArray(IntAsBigInt(state));
+        for i in 0..Length(arr)-1{
+            if(arr[i]){
+                CX(reg[Length(reg)-1-i], flags[Length(reg)-1-i]);
+            }elif (i < Length(reg)){
+                X(reg[Length(reg)-1-i]);
+                CX(reg[Length(reg)-1-i], flags[Length(reg)-1-i]);
+                X(reg[Length(reg)-1-i]);
+            }
+        }
+    }
+
+    operation CopyQubit(q : Qubit, q1: Qubit, accReg : Qubit[]):Unit{
+        
+        Controlled ApplyToEachCA([q], (X,accReg));
+        for i in 0..Length(accReg)-1{
+            Ry(2.0*ArcCos(Sqrt(1.0/IntAsDouble(Length(accReg)))), accReg[i]);
+        }
+        Controlled X(accReg, q1);
+        //Controlled ApplyToEachCA([q], (X,accReg));
+    //        for i in 0..Length(accReg)-1{
+    //            Adjoint Ry(2.0*ArcCos(Sqrt(1.0/IntAsDouble(acc))), accReg[i]);
+    //        }
     }
 
     
