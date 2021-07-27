@@ -9,9 +9,14 @@ trainingGS, testingGs = getImgsGS()
 
 ## MAIN STEP 1 ALGORITHMS ##
 def getTrainingFeatures():
-	c = ExtractColor(training)
-	t = ExtractTexture(trainingGS)
-	return c + t 
+	features = []
+	colors = ExtractColor(training)
+	textures = ExtractTexture(trainingGS)
+
+	for i in range(0, len(features)):
+		features[i] = textures[i] + colors[i]
+
+	return features
 
 # NOTE: If using only one testing image, wrap testing in list using []
 def getTestingFeatures():
@@ -31,6 +36,7 @@ def ExtractColor(images):
 	Qs = 3
 
 	GVals = []
+	ColorFeatures = []
 
 	for image in images:
 		for pixel in image:
@@ -43,8 +49,10 @@ def ExtractColor(images):
 			G = Qh * h + Qs * s + b
 			GVals.append(G)
 
-	c = CalcHistogram(GVals, 0, 71)
-	return normalize(c)
+		c = CalcHistogram(GVals, 0, 71)
+		ColorFeatures.append(normalize(c))
+		Gvals = []
+	return ColorFeatures
 
 # Helper for ExtractColor
 # Gets the histogram for the G values as the final processing step
@@ -98,8 +106,14 @@ def Quantize(H, S, B):
 	return (h, s, b)
 
 # Step 1.2 of algorithm
+def ExtractTexture(imagesGS):
+	textures = []
+	for image in imagesGS:
+		textures.append(GetTexture(image))
+	return textures
+
 # Extract texture features using the gray level co-occurence matrix
-def ExtractTexture(imageGS):
+def GetTexture(imageGS):
 	contrasts, correlations, energys, entropys = GLCM(imageGS)
 	textures = [mean(contrasts), variance(contrasts), mean(correlations), variance(correlations), mean(energys), variance(energys), mean(entropys), variance(entropys)]
 	return normalize(textures)

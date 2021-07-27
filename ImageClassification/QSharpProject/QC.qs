@@ -70,7 +70,7 @@
 
     //Accepts input as Big Endian Registers and flips o if r > p
     //Algorithm is O(log(n)) worst case 
-    //flages is used for internal operations must be provided as |0> with length 
+    //flags is used for internal operations must be provided as |0> with length 
     //Length(r)+2
     operation QuantumComparator(r: Qubit[], p: Qubit[], output : Qubit, flags : Qubit[]): Unit is Ctl + Adj{
         
