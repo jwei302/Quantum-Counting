@@ -1,2 +1,2 @@
-# final_project
+# Quantum-Counting
 Quantum Computing @ MIT Beaverwokrs
