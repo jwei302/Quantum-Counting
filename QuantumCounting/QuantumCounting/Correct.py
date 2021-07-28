@@ -7,7 +7,7 @@ from qiskit import QuantumCircuit, transpile, assemble, Aer
 from time import perf_counter
 from qiskit import IBMQ
 from qiskit.providers.aer import AerSimulator
-from qiskit.test.mock import FakeToronto
+from qiskit.test.mock import FakeMontreal
 from qiskit import execute
 
 
@@ -46,7 +46,7 @@ cgrit = grit.control()
 
 def qft(n):
     """Creates an n-qubit QFT circuit"""
-    circuit = QuantumCircuit(5)
+    circuit = QuantumCircuit(1)
     def swap_registers(circuit, n):
         for qubit in range(n//2):
             circuit.swap(qubit, n-qubit-1)
@@ -65,11 +65,11 @@ def qft(n):
     swap_registers(circuit, n)
     return circuit
 
-qft_dagger = qft(5).to_gate().inverse()
+qft_dagger = qft(1).to_gate().inverse()
 qft_dagger.label = "QFT†"
 
 # Create QuantumCircuit
-t = 5   # no. of counting qubits
+t = 1   # no. of counting qubits
 n = 4   # no. of searching qubits
 start = perf_counter()
 qc = QuantumCircuit(n+t, t) # Circuit with n+t qubits and t classical bits
@@ -109,26 +109,26 @@ print(f"Gate count: {qc.count_ops()}")
 
 
 
-backend = FakeToronto()
-start = perf_counter()
-circuit = transpile(qc, backend=backend, optimization_level=1)
-end = perf_counter()
-print(f"Compiling and Optimization: {end - start}")
-start = perf_counter()
-run = execute(circuit, backend, shots=1024)
-end = perf_counter()
-print(f"Simulation Time: {end-start}")
-result = run.result()
-counts = result.get_counts()
-
-
-#simulator = Aer.get_backend('aer_simulator')
+#backend = FakeMontreal()
 #start = perf_counter()
-#simulation = execute(qc, simulator, shots=1024)
+#circuit = transpile(qc, backend=backend, optimization_level=1)
 #end = perf_counter()
-#print(f"Simulation time: {end-start}")
-#result = simulation.result()
-#counts = result.get_counts(qc)
+#print(f"Compiling and Optimization: {end - start}")
+#start = perf_counter()
+#run = execute(circuit, backend, shots=1024)
+#end = perf_counter()
+#print(f"Simulation Time: {end-start}")
+#result = run.result()
+#counts = result.get_counts()
+
+
+simulator = Aer.get_backend('aer_simulator')
+start = perf_counter()
+simulation = execute(qc, simulator, shots=1024)
+end = perf_counter()
+print(f"Simulation time: {end-start}")
+result = simulation.result()
+counts = result.get_counts(qc)
 
 for(measured_state, count) in counts.items():
     big_endian_state = measured_state[::-1]
