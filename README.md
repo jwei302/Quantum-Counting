@@ -25,10 +25,23 @@ Brassard, G., Hoyer, P., Mosca, M. & Tapp, A. Quantum Amplitude Amplification an
 
 This paper describes the complete math and theory behind the implementation of quantum counting. It uses phase estimation with Grover's iteration as the unitary operator. This complete circuit allows us to estimate the probability that a picked solution will be correct after some clever math. Finally, we multiply this probability by 2^n, where n is the number of inputs to the blackbox function `f`, because this will give us a good estimate for the total number of solutions. While this algorithm is probabilistic, the chance of failing is very low. 
 
-The paper describes the follow complexities for the applications Quantum Counting:
+The paper describes the follow complexities for the applications Quantum Counting, where t is the number of counting Qubits and N is the total number of possible inputs:
 
-| Syntax      | Quantum Complexity |  Classical Complexity |
+| Problem      | Quantum Complexity |  Classical Complexity |
 | ----------- | ----------- | ---------------------
-| Decision      |        |
-| Searching   | Text        |
+| Decision      |   Θ(√(N/(t + 1)))      | Θ(N/(t + 1))
+| Searching   | Θ(√(N/(t + 1)))         | Θ(N/(t + 1))
+| Counting with error √t | Θ(√N) | N/A
+| Exact counting | Θ(√((t + 1)(N − t + 1)) | Θ(N)
+
 ## Our Approach
+We implemented the algorithm in Q# first to see if it was functional. Then we ported it over to Qiskit to assess its practicality because Qiskit had a more robust resource estimator.
+
+### Q# Implementation
+We started by parsing through the paper and taking notes, as well as searching for circuit diagrams. We found a few good circuit diagrams and implemented them in Q#. We faced issues with Unit Testing in Q# because we had to write a lot of individual tests to make sure that the algorithm worked for every possible Oracle. In the end, the Q# implementation succeeded for all oracles we could implemtn and we moved on to porting the code over to Qiskit.
+
+### Qiskit Implementation
+We just translated the code to Qiskit and wrote new unit tests. We had trouble with doing controlled operations due to Qiskit's syntax and working with the Qiskit library's different measurement methods. Finally, we finished the code and moved on to analyzing the algorithm's resource requirements.
+
+## Practicality Analysis
+
