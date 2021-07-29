@@ -1,4 +1,3 @@
-
 import numpy as np
 import math
 
@@ -14,10 +13,20 @@ from qiskit import execute
 
 def example_grover_iteration():
     # Do circuit
-    l = 4
-    qc = QuantumCircuit(l)
+    qc = QuantumCircuit(4)
     # Oracle
-    
+    qc.h([2,3])
+    qc.ccx(0,1,2)
+    qc.h(2)
+    qc.x(2)
+    qc.ccx(0,2,3)
+    qc.x(2)
+    qc.h(3)
+    qc.x([1,3])
+    qc.h(2)
+    qc.mct([0,1,3],2)
+    qc.x([1,3])
+    qc.h(2)
     # Diffuser
     qc.h(range(3))
     qc.x(range(3))
@@ -37,7 +46,7 @@ cgrit = grit.control()
 
 def qft(n):
     """Creates an n-qubit QFT circuit"""
-    circuit = QuantumCircuit(4)
+    circuit = QuantumCircuit(1)
     def swap_registers(circuit, n):
         for qubit in range(n//2):
             circuit.swap(qubit, n-qubit-1)
@@ -56,11 +65,11 @@ def qft(n):
     swap_registers(circuit, n)
     return circuit
 
-qft_dagger = qft(4).to_gate().inverse()
-qft_dagger.label = "QFTâ€ "
+qft_dagger = qft(1).to_gate().inverse()
+qft_dagger.label = "QFT†"
 
 # Create QuantumCircuit
-t = 4   # no. of counting qubits
+t = 1   # no. of counting qubits
 n = 4   # no. of searching qubits
 start = perf_counter()
 qc = QuantumCircuit(n+t, t) # Circuit with n+t qubits and t classical bits
