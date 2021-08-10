@@ -7,14 +7,14 @@
     open Microsoft.Quantum.Convert;
  
   
-    //This operation flips the phase of the target qubit if the register is in the 0 state
+    // Flips the phase of the target qubit if the register is in the 0 state
     operation FlipPhaseIfAllZeros (register : Qubit[], target : Qubit) : Unit is Ctl + Adj{
         ApplyToEachCA(X,register); //If all 0s then make all 1s
         Controlled Z(register, target); //If all 1s flip phase of target
         ApplyToEachCA(X,register); //Reset qubits to inital state
     }
 
-    //This is the diffusion operation in Grovers algorithm
+    // Diffusion operater in Grovers algorithm
     operation DiffusionOperator (
         register : Qubit[],
         target : Qubit
@@ -24,7 +24,7 @@
         ApplyToEachCA(H,register); //Apply H all
     }
     
-    //Grovers algorithm (input and target must be in 0 state)
+    // Grover's algorithm (input and target must be in 0 state)
     operation GroversAlgorithm (input: Qubit[], target: Qubit, oracle: ((Qubit[],Qubit)=>Unit is Ctl + Adj)) : Unit is Ctl + Adj{
 
         let iterations = Round(PowD(2.0, IntAsDouble(Length(input)) / 2.0)); //Num of iterations (only valid for 1 solution)
@@ -39,7 +39,8 @@
         }
 
     }
-
+    
+    // Grover's iteration (subrouting for main algorithm)
     operation GroverIteration (input: Qubit[], target: Qubit, oracle: ((Qubit[],Qubit)=>Unit is Ctl + Adj)) : Unit is Ctl + Adj{
         oracle(input,target); //Apply the oracle
         DiffusionOperator(input,target); //Aply the diffusion operator
