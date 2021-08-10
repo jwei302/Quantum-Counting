@@ -1,12 +1,12 @@
 namespace final_project_algorithm.counting {
 	open Microsoft.Quantum.Canon;
 	open Microsoft.Quantum.Convert;
-    open Microsoft.Quantum.Intrinsic;
-    open Microsoft.Quantum.Math;
+    	open Microsoft.Quantum.Intrinsic;
+    	open Microsoft.Quantum.Math;
 	open Microsoft.Quantum.Arithmetic;
 	open final_project_algorithm;
 
-
+	// Conducts main processing
 	operation GetPhase(oracle : (Qubit[], Qubit) => Unit is Ctl + Adj, numberOfQubits : Int): Double {
 		let countingLength = numberOfQubits+6;
 		use counting = Qubit[countingLength];
@@ -32,11 +32,13 @@ namespace final_project_algorithm.counting {
 		
 		return (IntAsDouble(num)/PowD(2.0,IntAsDouble(countingLength))) * PI() * 2.0;
 	}
-
+	
+	// Slightly modify the phase to get amplitude
 	operation GetAmplitude(phase: Double): Double{
 		return PowD(Sin(phase),2.0);
 	}
-
+	
+	// Slightly modify the amplitude to get count
 	operation GetCount(phase: Double, numberOfQubits: Int): Int {
 		let N = PowD(2.0, IntAsDouble(numberOfQubits));
 		return Round((1.0-PowD(Sin(phase/2.0),2.0))*N);
