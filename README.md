@@ -1,4 +1,8 @@
 # Quantum Counting
+![MIT License](https://img.shields.io/cocoapods/l/AFNetworking?style=for-the-badge)
+![Built in 2 weeks](https://img.shields.io/badge/built%20in-2%20weeks-black?style=for-the-badge)
+![Click for video on YouTube](https://img.shields.io/badge/Project%20Video-YouTube-red?style=for-the-badge&link=https://youtu.be/RtU7ojCMDsM?list=PLf9oKp0RkBIyPM41TOtJB2AD7QestBKQa&link=https://youtu.be/RtU7ojCMDsM?list=PLf9oKp0RkBIyPM41TOtJB2AD7QestBKQa)
+
 This is the repo for the final project for the Quantum Software Development course @ MIT Beaver Works Summer Institute. The final project involved selecting an algorithm to implement and then conducting a practicality assessment on that algorithm. Our team, made up of Sarthak Dayal, Shuhul Mujoo, and Jeffrey Wei chose to implement the Quantum Counting Algorithm.
 
 ![image](https://user-images.githubusercontent.com/63827830/127393159-4a479909-a144-4fab-aa8a-ab0143dc4dcf.png)
@@ -41,7 +45,16 @@ We implemented the algorithm in Q# first to see if it was functional. Then we po
 We started by parsing through the paper and taking notes, as well as searching for circuit diagrams. We found a few good circuit diagrams and implemented them in Q#. We faced issues with Unit Testing in Q# because we had to write a lot of individual tests to make sure that the algorithm worked for every possible Oracle. In the end, the Q# implementation succeeded for all oracles we could implemtn and we moved on to porting the code over to Qiskit.
 
 ### Qiskit Implementation
-We just translated the code to Qiskit and wrote new unit tests. We had trouble with doing controlled operations due to Qiskit's syntax and working with the Qiskit library's different measurement methods. Finally, we finished the code and moved on to analyzing the algorithm's resource requirements.
+We translated the code to Qiskit and wrote new unit tests. We had trouble with doing controlled operations due to Qiskit's syntax and working with the Qiskit library's different measurement methods. Finally, we finished the code and moved on to analyzing the algorithm's resource requirements.
 
 ## Practicality Analysis
+After creating implementations in Q# and Qiskit, we analysed the practicality and resource usage of the algorithm. The results proved to use that the algorithm is impractical for current Quantum computers given the high error rate. Below is a summary of our results.
 
+![Quantum Counting Presentation](https://user-images.githubusercontent.com/63827830/128811689-9b99f4fc-7945-4a96-8056-d149b75997d2.png)
+
+Here, t is the number of counting qubits and n is the number of measuring qubits. These two numbers are important metrics for the algorithm to work. The AER Backend was errorless and yet produced one wrong result due to the number of t qubits being too low. This proved to us that the accuracy increased with an increase in the number of counting qubits. Additionally, we can see that the other backends rarely produced a correct result, thereby showing us that Quantum Counting is impractical today.
+
+## Resources
+- [Quantum Counting in the Qiskit textbook](https://qiskit.org/textbook/ch-algorithms/quantum-counting.html)
+- [Original Paper](https://arxiv.org/abs/quant-ph/0005055)
+- [Wikipedia](https://en.wikipedia.org/wiki/Quantum_counting_algorithm)
