@@ -3,7 +3,7 @@
 ![Built in 2 weeks](https://img.shields.io/badge/built%20in-2%20weeks-black?style=for-the-badge)
 ![Click for video on YouTube](https://img.shields.io/badge/Project%20Video-YouTube-red?style=for-the-badge&link=https://youtu.be/RtU7ojCMDsM?list=PLf9oKp0RkBIyPM41TOtJB2AD7QestBKQa&link=https://youtu.be/RtU7ojCMDsM?list=PLf9oKp0RkBIyPM41TOtJB2AD7QestBKQa)
 
-This is the repo for the final project for the Quantum Software Development course @ MIT Beaver Works Summer Institute. The final project involved selecting an algorithm to implement and then conducting a practicality assessment on that algorithm. Our team, made up of Sarthak Dayal, Shuhul Mujoo, and Jeffrey Wei chose to implement the Quantum Counting Algorithm.
+This is the repo for the final project for the Quantum Software Development course @ MIT Beaver Works Summer Institute. The final project involved selecting an algorithm to implement and then conducting a practicality assessment on that algorithm. Our team, made up of [Sarthak Dayal](https://github.com/sarthak-dayal), [Shuhul Mujoo](https://github.com/shuhul), and [Jeffrey Wei](https://github.com/jwei302) chose to implement the Quantum Counting Algorithm.
 
 ![image](https://user-images.githubusercontent.com/63827830/127393159-4a479909-a144-4fab-aa8a-ab0143dc4dcf.png)
 
