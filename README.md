@@ -1,5 +1,5 @@
 # [Quantum Counting](https://www.youtube.com/watch?v=RtU7ojCMDsM&list=PLf9oKp0RkBIyPM41TOtJB2AD7QestBKQa)
-![MIT License](https://img.shields.io/cocoapods/l/AFNetworking?style=for-the-badge)
+![MIT License](https://img.shields.io/static/v1?label=license&message=mit&color=red&style=for-the-badge&link=https://github.com/jwei302/Quantum-Counting/blob/main/LICENSE)
 ![Built in 2 weeks](https://img.shields.io/badge/built%20in-2%20weeks-black?style=for-the-badge)
 ![Click for video on YouTube](https://img.shields.io/badge/Project%20Video-YouTube-red?style=for-the-badge&link=https://youtu.be/RtU7ojCMDsM?list=PLf9oKp0RkBIyPM41TOtJB2AD7QestBKQa&link=https://youtu.be/RtU7ojCMDsM?list=PLf9oKp0RkBIyPM41TOtJB2AD7QestBKQa)
 
